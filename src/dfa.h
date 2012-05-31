@@ -4,7 +4,7 @@
 #include "util.h"
 #include "nfa.h"
 #include "expr.h"
-#if REGEN_ENABLE_JIT
+#if REGEN_ENABLE_XBYAK
 #include "jitter.h"
 #include "ext/xbyak/xbyak.h"
 #include "ext/str_util.hpp"
@@ -12,7 +12,7 @@
 
 namespace regen {
   
-#if REGEN_ENABLE_JIT
+#if REGEN_ENABLE_XBYAK
 class DFA;
 class JITCompiler: public Xbyak::CodeGenerator {
  public:
@@ -77,13 +77,13 @@ public:
   typedef std::deque<State>::const_iterator const_iterator;
 
   DFA(const Regen::Options flag = Regen::Options::NoParseFlags): complete_(false), minimum_(false), flag_(flag), olevel_(Regen::Options::O0)
-#ifdef REGEN_ENABLE_JIT
+#ifdef REGEN_ENABLE_XBYAK
   , xgen_(NULL)
 #endif
   {}
   DFA(const ExprInfo &expr_info, std::size_t limit = std::numeric_limits<size_t>::max());
   DFA(const NFA &nfa, std::size_t limit = std::numeric_limits<size_t>::max());
-  #if REGEN_ENABLE_JIT
+  #if REGEN_ENABLE_XBYAK
   virtual ~DFA() { delete xgen_; }
   #else
   virtual ~DFA() { }
@@ -146,7 +146,7 @@ protected:
   bool EliminateBranch();
   bool Reduce();
   Regen::Options::CompileFlag olevel_;
-#if REGEN_ENABLE_JIT
+#if REGEN_ENABLE_XBYAK
   JITCompiler *xgen_;
   mutable Jitter *jitter_;
 #endif

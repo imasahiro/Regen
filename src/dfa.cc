@@ -4,7 +4,7 @@ namespace regen {
 
 DFA::DFA(const ExprInfo &expr_info, std::size_t limit):
     expr_info_(expr_info), complete_(false), minimum_(false), olevel_(Regen::Options::O0)
-#ifdef REGEN_ENABLE_JIT
+#ifdef REGEN_ENABLE_XBYAK
     , xgen_(NULL)
 #endif
 {
@@ -13,7 +13,7 @@ DFA::DFA(const ExprInfo &expr_info, std::size_t limit):
 
 DFA::DFA(const NFA &nfa, std::size_t limit):
     complete_(false), minimum_(false), olevel_(Regen::Options::O0)
-#ifdef REGEN_ENABLE_JIT
+#ifdef REGEN_ENABLE_XBYAK
     , xgen_(NULL)
 #endif
 {
@@ -498,7 +498,7 @@ void DFA::Complementify()
   }
 }
 
-#if REGEN_ENABLE_JIT
+#if REGEN_ENABLE_XBYAK
 JITCompiler::JITCompiler(const DFA &dfa, std::size_t state_code_size = 64):
     /* code segment for state transition.
      *   each states code was 16byte alligned.

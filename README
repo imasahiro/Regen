@@ -16,11 +16,11 @@ or build Regen with no JIT-ver
 or no Parallelization.
 % make REGEN_ENABLE_PARALLEL=no
 or enable neither.
-% make REGEN_ENABLE_XBYAK=no REGEN_ENABLE_XBYAK=no
+% make REGEN_ENABLE_XBYAK=no REGEN_ENABLE_PARALLEL=no
 
 * test and behcnmarks
 % make test
-% make benchmark
+% make bench
 or try manually
 % make test.o && ./test.o -t THREAD_NUM {-O olevel}
 % make bench.o && ./bench.o {-O olevel}
